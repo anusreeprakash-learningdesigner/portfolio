@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Learning Designer. Psychology Thinker. Story-driven Educator.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --coral: #FF6B6B;
+    --yellow: #FFD93D;
+    --green: #6BCB77;
+    --white: #f0ede8;
+    --muted: #6b6b7a;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--coral);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--coral);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s ease, opacity 0.3s;
+    opacity: 0.5;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: -2rem;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 18vw, 22rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift {
+    from { transform: translateY(-50%) translateX(0); }
+    to { transform: translateY(-50%) translateX(-3rem); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+  .hero-eyebrow {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--yellow);
+  }
+
+  .hero-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-tagline strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--coral);
+    color: var(--bg);
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    transition: background 0.3s, transform 0.2s;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+  .hero-cta:hover { background: var(--yellow); transform: translateY(-2px); }
+  .hero-cta svg { transition: transform 0.3s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem; right: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--coral), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* Sections */
+  section { padding: 8rem 4rem; }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4rem;
+  }
+
+  /* About */
+  .about { background: var(--surface); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-box {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--coral) 0%, #c94545 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(0,0,0,0.08) 20px,
+      rgba(0,0,0,0.08) 21px
+    );
+  }
+
+  .about-box-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .about-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.15);
+    line-height: 1;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .about-box-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    background: rgba(0,0,0,0.2);
+    padding: 0.4rem 1rem;
+    display: inline-block;
+  }
+
+  .about-accent {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    width: 60%;
+    aspect-ratio: 1;
+    background: var(--yellow);
+    z-index: -1;
+  }
+
+  .about-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #a0a0b0;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .about-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--yellow);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* Work */
+  .work { background: var(--bg); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, border-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: none;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .project-card:hover .card-arrow {
+    transform: translate(4px, -4px);
+    opacity: 1;
+  }
+
+  .project-card:hover .card-img-overlay {
+    opacity: 0.5;
+  }
+
+  .card-img {
+    height: 240px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-img-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .card-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    opacity: 0.3;
+    transition: opacity 0.4s;
+  }
+
+  .card-img-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .card-subject {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-style: italic;
+    color: white;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+
+  .card-subject-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.5rem;
+  }
+
+  .card-body { padding: 2rem; }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 0;
+    border: 1px solid;
+  }
+
+  .tag-coral { color: var(--coral); border-color: rgba(255,107,107,0.3); }
+  .tag-yellow { color: var(--yellow); border-color: rgba(255,217,61,0.3); }
+  .tag-green { color: var(--green); border-color: rgba(107,203,119,0.3); }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .card-caption {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .card-desc {
+    font-size: 0.9rem;
+    color: #8888a0;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+
+  /* Coming soon card */
+  .card-coming {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .card-coming .card-img-bg {
+    filter: grayscale(1);
+  }
+
+  .coming-soon-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.8rem;
+    color: var(--muted);
+    z-index: 2;
+  }
+
+  /* Skills */
+  .skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .skill-block {
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .skill-block:hover { border-color: rgba(255,255,255,0.2); }
+
+  .skill-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .skill-block.s1::before { background: var(--coral); }
+  .skill-block.s2::before { background: var(--yellow); }
+  .skill-block.s3::before { background: var(--green); }
+
+  .skill-icon {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .skill-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-block.s1 .skill-title { color: var(--coral); }
+  .skill-block.s2 .skill-title { color: var(--yellow); }
+  .skill-block.s3 .skill-title { color: var(--green); }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .skill-list li {
+    font-size: 0.85rem;
+    color: #8888a0;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .skill-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 0.7rem;
+  }
+
+  /* Contact */
+  .contact {
+    background: var(--bg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(255,107,107,0.08), transparent);
+    pointer-events: none;
+  }
+
+  .contact-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+
+  .contact .section-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border: 1px solid;
+    transition: all 0.3s;
+  }
+
+  .contact-btn.primary {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: var(--bg);
+  }
+  .contact-btn.primary:hover { background: transparent; color: var(--coral); }
+
+  .contact-btn.secondary {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--white);
+  }
+  .contact-btn.secondary:hover { border-color: var(--white); }
+
+  /* Footer */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.hidden {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section, .hero { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .about-accent { display: none; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .hero-scroll { display: none; }
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg-text">LEARN</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Anusree Prakash · Educational Psychology · Curriculum Design</p>
+    <h1 class="hero-name">Learning<br><em>Designer.</em><br>Psychology<br>Thinker.</h1>
+    <p class="hero-tagline">
+      <strong>Story-driven educator</strong> building learning experiences at the intersection of how people grow and how content can truly serve them.
+    </p>
+    <a href="#work" class="hero-cta">
+      See My Work
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-box" style="background: none; padding: 0;">
+        <img src="anu_25.jpeg" alt="Anusree Prakash" style="width:100%; height:100%; object-fit:cover; object-position: center top; display:block;" />
+      </div>
+      <div class="about-accent"></div>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2rem;">Where psychology<br><em style="color: var(--yellow);">meets design.</em></h2>
+      <p>I'm an educational psychology postgraduate with a passion for <strong>building learning experiences that stick</strong>. From primary science textbooks to psycho-educational support in schools, I work at the intersection of how people learn and how content can serve them better.</p>
+      <p>Currently interning as a <strong>Curriculum Designer & Content Creator</strong> at Kreedo Early Childhood Services, I bring both the science of learning and the craft of storytelling to every project I touch.</p>
+      <div class="about-stats">
+        <div>
+          <span class="stat-num">300+</span>
+          <span class="stat-label">Hours of experience<br>across roles</span>
+        </div>
+        <div>
+          <span class="stat-num">100+</span>
+          <span class="stat-label">Hours of direct<br>learner support</span>
+        </div>
+        <div>
+          <span class="stat-num">3</span>
+          <span class="stat-label">Degrees in<br>progress / earned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Work -->
+<section class="work" id="work">
+  <p class="section-label reveal">Selected Work</p>
+  <h2 class="section-title reveal">What I've <em style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--coral);">Built</em></h2>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <a href="https://docs.google.com/document/d/1i1ZiMywBh8FCQP_ZUAlVRTTIRMHEG4aL8GtdtZW2qoE/edit?usp=sharing" target="_blank" class="project-card reveal">
+      <div class="card-img">
+        <div class="card-img-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #FF6B6B22 50%, #FF6B6B44 100%);"></div>
+        <!-- Decorative grid pattern -->
+        <div style="position:absolute;inset:0;background-image: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,107,107,0.06) 30px, rgba(255,107,107,0.06) 31px), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,107,107,0.06) 30px, rgba(255,107,107,0.06) 31px);"></div>
+        <div class="card-img-overlay"></div>
+        <div class="card-img-content">
+          <div style="font-size:3rem; margin-bottom: 0.5rem;">🚴</div>
+          <div class="card-subject">Motion & Speed</div>
+          <div class="card-subject-sub">Grade 4 · Science</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-coral">Curriculum Design</span>
+          <span class="tag tag-yellow">Content Writing</span>
+          <span class="tag tag-green">SME Collaboration</span>
+          <span class="tag tag-coral">Instructional Design</span>
+        </div>
+        <h3 class="card-title">Grade 4 Science Textbook — Kreedo Early Childhood Services</h3>
+        <p class="card-caption">"Making Newton make sense to a 9-year-old."</p>
+        <p class="card-desc">A full science chapter developed for primary learners, turning complex physics concepts into story-led, age-appropriate content — from learning objectives to formula exercises, through the eyes of Maya and her bicycle.</p>
+        <span class="card-arrow" style="color: var(--coral);">
+          Read the Chapter
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3 3h10v10M3 13L13 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Project 2 -->
+    <a href="https://docs.google.com/document/d/10GvoUIn6B4CsKaKFWljVLS2ju7__tdUBX6KM9H84qDg/edit?usp=sharing" target="_blank" class="project-card reveal">
+      <div class="card-img">
+        <div class="card-img-bg" style="background: linear-gradient(135deg, #0f1f1a 0%, #FFD93D18 50%, #FFD93D33 100%);"></div>
+        <div style="position:absolute;inset:0;background-image: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,217,61,0.05) 30px, rgba(255,217,61,0.05) 31px), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,217,61,0.05) 30px, rgba(255,217,61,0.05) 31px);"></div>
+        <div class="card-img-overlay"></div>
+        <div class="card-img-content">
+          <div style="font-size:3rem; margin-bottom: 0.5rem;">🎬</div>
+          <div class="card-subject">ROI Training</div>
+          <div class="card-subject-sub">Sales Storyboard · Kreedo</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-yellow">Storyboarding</span>
+          <span class="tag tag-coral">Script Writing</span>
+          <span class="tag tag-green">Employee Training</span>
+          <span class="tag tag-yellow">Visual Direction</span>
+        </div>
+        <h3 class="card-title">Sales Training Storyboards — Kreedo Early Childhood Services</h3>
+        <p class="card-caption">"From screen to script — designing the training that trains the trainers."</p>
+        <p class="card-desc">A series of instructional storyboards for training Kreedo's inside sales team. Each screen maps voiceover narration, on-screen text, and visual direction — translating complex ROI and financial concepts into confident, learnable conversations for business managers in the field.</p>
+        <span class="card-arrow" style="color: var(--yellow);">
+          View Storyboard
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3 3h10v10M3 13L13 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Project 3 -->
+    <div class="project-card reveal" style="cursor: none; position: relative;">
+      <div style="position:absolute; top: 1.5rem; right: 1.5rem; z-index: 2; background: rgba(107,203,119,0.15); border: 1px solid rgba(107,203,119,0.4); font-family: 'Syne', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 0.8rem; color: var(--green);">Work in Progress</div>
+      <div class="card-img">
+        <div class="card-img-bg" style="background: linear-gradient(135deg, #0d1a1f 0%, #6BCB7718 50%, #6BCB7730 100%);"></div>
+        <div style="position:absolute;inset:0;background-image: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(107,203,119,0.05) 30px, rgba(107,203,119,0.05) 31px), repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(107,203,119,0.05) 30px, rgba(107,203,119,0.05) 31px);"></div>
+        <div class="card-img-overlay"></div>
+        <div class="card-img-content">
+          <div style="font-size:3rem; margin-bottom: 0.5rem;">📊</div>
+          <div class="card-subject">Quant Research</div>
+          <div class="card-subject-sub">E-Learning Course · Canvas LMS</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-tags">
+          <span class="tag tag-green">E-Learning Design</span>
+          <span class="tag tag-coral">Canvas LMS</span>
+          <span class="tag tag-yellow">Genially</span>
+          <span class="tag tag-green">Canva</span>
+        </div>
+        <h3 class="card-title">Quantitative Research Methods in Social Science — Self-Initiated</h3>
+        <p class="card-caption">"Making quantitative research feel less like a wall and more like a door."</p>
+        <p class="card-desc">An independently developed e-learning course on Quantitative Research Methods, designed for social science learners and built to go live on Canvas LMS. Using Genially for interactive content and Canva for visual design, the course breaks down dense research concepts into engaging, accessible, structured learning experiences. Currently in active development.</p>
+        <span class="card-arrow" style="color: var(--green); opacity: 1;">
+          In Development
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v4l3 3M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="skills" id="skills">
+  <p class="section-label reveal">Capabilities</p>
+  <h2 class="section-title reveal">What I <em style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--green);">Bring</em></h2>
+  <div class="skills-grid">
+    <div class="skill-block s1 reveal">
+      <span class="skill-icon">🎨</span>
+      <h3 class="skill-title">Design & Development</h3>
+      <ul class="skill-list">
+        <li>Course structuring & lesson flow</li>
+        <li>Age-appropriate content writing</li>
+        <li>Assessment & exercise design</li>
+        <li>Image direction & visual suggestions</li>
+        <li>Learner engagement strategies</li>
+        <li>Articulate Storyline (beginner)</li>
+      </ul>
+    </div>
+    <div class="skill-block s2 reveal">
+      <span class="skill-icon">🧠</span>
+      <h3 class="skill-title">Psychology & Research</h3>
+      <ul class="skill-list">
+        <li>Psycho-educational assessment</li>
+        <li>Academic writing & reporting</li>
+        <li>Psychological research methods</li>
+        <li>JAMOVI data analysis</li>
+        <li>Developmental & contextual evaluation</li>
+        <li>Learning needs facilitation</li>
+      </ul>
+    </div>
+    <div class="skill-block s3 reveal">
+      <span class="skill-icon">🤝</span>
+      <h3 class="skill-title">Collaboration & Leadership</h3>
+      <ul class="skill-list">
+        <li>SME & cross-functional collaboration</li>
+        <li>Presentation & communication</li>
+        <li>Event organization & leadership</li>
+        <li>Community service & volunteering</li>
+        <li>Student council & representation</li>
+        <li>MS Office Suite</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-content">
+    <p class="section-label reveal">Get In Touch</p>
+    <h2 class="section-title reveal">Let's <em style="font-family:'Playfair Display',serif; font-style:italic; color:var(--coral);">collaborate.</em></h2>
+    <p class="contact-sub reveal">Open to collaborations, projects, and conversations around curriculum design, educational psychology, and learning experiences that matter.</p>
+    <div class="contact-links reveal">
+      <a href="/cdn-cgi/l/email-protection#6f16001a1d0a020e06032f08020e0603410c0002" class="contact-btn primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Send an Email
+      </a>
+      <a href="https://www.linkedin.com/in/anusreeprakashonline/" target="_blank" class="contact-btn secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span>© 2026 Anusree Prakash — Learning Designer. Psychology Thinker. Story-driven Educator.</span>
+  <span style="color: var(--coral);">Built with intention.</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.transform = `translate(${mouseX - 6}px, ${mouseY - 6}px)`;
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.transform = `translate(${ringX - 18}px, ${ringY - 18}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.opacity = '1';
+      ring.style.transform += ' scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.opacity = '0.5';
+    });
+  });
+
+  // Scroll reveal - visible by default, animate on scroll if supported
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    reveals.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(32px)';
+    });
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          entry.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(el => observer.observe(el));
+  }
+</script>
+</body>
+</html>
